@@ -9,7 +9,7 @@ export default class CreateAppointments1596142478232
         columns: [
           {
             name: 'id',
-            type: 'uuid',
+            type: 'varchar',
             isPrimary: true,
             generationStrategy: 'uuid',
             default: 'uuid_generate_v4()',
