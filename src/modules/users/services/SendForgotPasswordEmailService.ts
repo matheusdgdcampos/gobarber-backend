@@ -1,11 +1,10 @@
 import { inject, injectable } from 'tsyringe';
+import path from 'path';
 
 import AppError from '@shared/errors/AppError';
 import IMailProvider from '@shared/container/providers/MailProvider/models/IMailProvider';
 import IUsersRepository from '../repositories/IUsersRepository';
 import IUserTokensRepository from '../repositories/IUserTokensRepository';
-
-// import User from '../infra/typeorm/entities/User';
 
 interface IRequest {
   email: string;
@@ -31,9 +30,29 @@ class SendForgotPasswordEmailService {
       throw new AppError('User does not exists');
     }
 
-    await this.userTokenRepository.generate(user.id);
+    const { token } = await this.userTokenRepository.generate(user.id);
 
-    this.mailProvider.sendMail(email, 'O email foi enviado');
+    const forgotPasswordTemplate = path.resolve(
+      __dirname,
+      '..',
+      'views',
+      'forgot_password.hbs',
+    );
+
+    await this.mailProvider.sendMail({
+      to: {
+        name: user.name,
+        email: user.email,
+      },
+      subject: '[Gobarber] Recuperação de senha.',
+      templateData: {
+        file: forgotPasswordTemplate,
+        variables: {
+          name: user.name,
+          link: `http://localhost:3333/reset_password?token=${token}`,
+        },
+      },
+    });
   }
 }
 
