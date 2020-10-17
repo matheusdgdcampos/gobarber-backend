@@ -14,7 +14,7 @@ class ShowProfileService {
   constructor(
     @inject('UsersRepository')
     private userRepository: IUsersRepository,
-  ) { }
+  ) {}
 
   public async execute({ user_id }: IRequest): Promise<User> {
     const user = await this.userRepository.findById(user_id);
