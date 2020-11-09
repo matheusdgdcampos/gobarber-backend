@@ -21,7 +21,7 @@ class SendForgotPasswordEmailService {
 
     @inject('UserTokensRepository')
     private userTokenRepository: IUserTokensRepository,
-  ) {}
+  ) { }
 
   public async execute({ email }: IRequest): Promise<void> {
     const user = await this.userRepository.findByEmail(email);
@@ -49,7 +49,7 @@ class SendForgotPasswordEmailService {
         file: forgotPasswordTemplate,
         variables: {
           name: user.name,
-          link: `http://localhost:3333/reset_password?token=${token}`,
+          link: `${process.env.APP_WEB_URL}/reset_password?token=${token}`,
         },
       },
     });
