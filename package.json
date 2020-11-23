@@ -7,6 +7,7 @@
     "@types/node": "^14.0.27",
     "bcryptjs": "^2.4.3",
     "celebrate": "^13.0.4",
+    "class-transformer": "^0.3.1",
     "cors": "^2.8.5",
     "date-fns": "^2.15.0",
     "dotenv": "^8.2.0",
@@ -26,7 +27,7 @@
   "scripts": {
     "build": "tsc",
     "dev:server": "tsnd -r tsconfig-paths/register --inspect --transpile-only --respawn --ignore-watch node_modules --no-notify src/shared/infra/http/server.ts",
-    "start": "tsnd -r tsconfig-paths/register src/shared/infra/http/server.ts",
+    "start": "ts-node -r tsconfig-paths/register --transpile-only src/shared/infra/http/server.ts",
     "typeorm": "tsnd -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "lint": "eslint . --ext .ts --fix",
     "test": "jest",
