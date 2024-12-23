@@ -1,5 +1,3 @@
-export class Appointment {
-  id: string;
-  provider: string;
-  date: Date;
-}
+import { Appointments as AppointmentsEntity } from '@prisma/client';
+
+export type Appointments = AppointmentsEntity;
