@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "@config/*": [
+        "./src/cconfig/*"
+      ],
+      "@modules/*": [
+        "./src/modules/*"
+      ],
+      "@common/*": [
+        "./src/common/*"
+      ]
+    }
+  }
+}
