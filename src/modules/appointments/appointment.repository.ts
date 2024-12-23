@@ -1,28 +1,31 @@
 import { Injectable } from '@nestjs/common';
-import { Appointment } from './entities/appointment.entity';
-import { isEqual } from 'date-fns';
+import { Appointments } from './entities/appointment.entity';
+import { CreateAppointmentDto } from './dto/create-appointment.dto';
+import { PrismaService } from '@common/services/prisma.service';
 
 @Injectable()
 export class AppointmentsRepository {
-  private appointments: Appointment[];
+  constructor(protected prismaService: PrismaService) {}
 
-  constructor() {
-    this.appointments = [];
+  public async create(
+    appointment: CreateAppointmentDto,
+  ): Promise<Appointments> {
+    const newAppointment = await this.prismaService.appointments.create({
+      data: appointment,
+    });
+    return newAppointment;
   }
 
-  public create(appointment: Appointment) {
-    this.appointments.push(appointment);
-    return appointment;
-  }
-
-  public findByDate(date: Date): Appointment | undefined {
-    const findAppointment = this.appointments.find((appointment) =>
-      isEqual(appointment.date, date),
-    );
+  public async findByDate(date: Date): Promise<Appointments | undefined> {
+    const findAppointment = await this.prismaService.appointments.findFirst({
+      where: {
+        date: date,
+      },
+    });
     return findAppointment;
   }
 
-  public findAll(): Appointment[] {
-    return this.appointments;
+  public async findAll(): Promise<Appointments[]> {
+    return this.prismaService.appointments.findMany();
   }
 }
