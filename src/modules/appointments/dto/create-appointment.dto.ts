@@ -5,5 +5,5 @@ export class CreateAppointmentDto {
   provider: string;
 
   @IsDateString()
-  date: string;
+  date: Date;
 }
