@@ -13,10 +13,25 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Appointments {
-  id       String   @id @default(cuid())
-  provider String
-  date     DateTime
+model Appointment {
+  id         String   @id @default(cuid())
+  providerId String?  @map("provider_id")
+  user       User?    @relation(fields: [providerId], references: [id])
+  date       DateTime
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
 
   @@map("appointments")
+}
+
+model User {
+  id           String        @id @default(cuid())
+  name         String
+  email        String        @unique
+  password     String
+  createdAt    DateTime      @default(now()) @map("created_at")
+  updatedAt    DateTime      @updatedAt @map("updated_at")
+  Appointments Appointment[]
+
+  @@map("users")
 }
