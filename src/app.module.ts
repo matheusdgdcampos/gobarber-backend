@@ -3,6 +3,8 @@ import { ConfigModule } from '@nestjs/config';
 import { AppointmentsModule } from './modules/appointments/appointments.module';
 import { validate } from './config/environments-config';
 import { CommonModule } from '@common/modules/common.modules';
+import { UsersModule } from './modules/users/users.module';
+import { PrismaService } from '@common/services/prisma.service';
 
 @Module({
   imports: [
@@ -12,8 +14,8 @@ import { CommonModule } from '@common/modules/common.modules';
     }),
     CommonModule,
     AppointmentsModule,
+    UsersModule,
   ],
-  controllers: [],
-  providers: [],
+  providers: [PrismaService],
 })
-export class AppModule {}
+export class AppModule { }
