@@ -7,4 +7,4 @@ import { Global, Module } from '@nestjs/common';
   providers: [PrismaService, HashService],
   exports: [PrismaService, HashService],
 })
-export class CommonModule { }
+export class CommonModule {}
