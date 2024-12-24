@@ -15,6 +15,9 @@
 pre-commit:
   parallel: false
   commands:
+    prettier:
+      glob: "*.{js,ts}"
+      run: "yarn prettier --write \"src/**/*.ts\""
     eslint:
       glob: "*.{js,ts}"
       run: "yarn eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
