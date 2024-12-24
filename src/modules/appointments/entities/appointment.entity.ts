@@ -1,3 +1,3 @@
-import { Appointments as AppointmentsEntity } from '@prisma/client';
+import { Appointment as AppointmentsEntity } from '@prisma/client';
 
 export type Appointments = AppointmentsEntity;
