@@ -7,7 +7,10 @@ export class HashService {
     return bcrypt.hash(password, 10);
   }
 
-  public async compareHashContent(password: string, hash: string): Promise<boolean> {
+  public async compareHashContent(
+    password: string,
+    hash: string,
+  ): Promise<boolean> {
     return bcrypt.compare(password, hash);
   }
 }
