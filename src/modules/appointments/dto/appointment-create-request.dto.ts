@@ -2,7 +2,7 @@ import { IsDateString, IsString } from 'class-validator';
 
 export class AppointmentCreateRequestDto {
   @IsString()
-  provider: string;
+  providerId: string;
 
   @IsDateString()
   date: string;
