@@ -7,14 +7,21 @@ import {
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersRepository } from './user.repository';
+import { HashService } from '@common/services/hash.service';
+import { UserCreateResponseDTO } from './dto/user-create-response.dto';
 
 @Injectable()
 export class UsersService {
   protected logger = new Logger(UsersService.name);
 
-  constructor(protected repository: UsersRepository) {}
+  constructor(
+    protected repository: UsersRepository,
+    protected hashService: HashService,
+  ) {}
 
-  public async create(createUserDto: CreateUserDto) {
+  public async create(
+    createUserDto: CreateUserDto,
+  ): Promise<UserCreateResponseDTO> {
     try {
       const userAlreadyExists = await this.repository.findByEmail(
         createUserDto.email,
@@ -24,8 +31,20 @@ export class UsersService {
         throw new UnprocessableEntityException();
       }
 
-      const user = await this.repository.create(createUserDto);
-      return user;
+      const hashPassword = await this.hashService.hashContent(
+        createUserDto.password,
+      );
+      const user = await this.repository.create({
+        ...createUserDto,
+        password: hashPassword,
+      });
+      return {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt,
+      };
     } catch (error) {
       this.logger.error(error);
 
