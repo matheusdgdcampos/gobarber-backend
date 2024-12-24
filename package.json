@@ -12,7 +12,7 @@
   "scripts": {
     "prepare": "lefthook install",
     "build": "nest build",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "format": "prettier --write \"src/**/*.ts\"",
     "start": "nest start --builder swc",
     "start:dev": "nest start --builder swc --watch",
     "start:debug": "nest start --builder swc --debug --watch",
