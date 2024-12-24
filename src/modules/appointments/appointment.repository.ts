@@ -10,14 +10,14 @@ export class AppointmentsRepository {
   public async create(
     appointment: CreateAppointmentDto,
   ): Promise<Appointments> {
-    const newAppointment = await this.prismaService.appointments.create({
+    const newAppointment = await this.prismaService.appointment.create({
       data: appointment,
     });
     return newAppointment;
   }
 
   public async findByDate(date: Date): Promise<Appointments | undefined> {
-    const findAppointment = await this.prismaService.appointments.findFirst({
+    const findAppointment = await this.prismaService.appointment.findFirst({
       where: {
         date: date,
       },
@@ -26,6 +26,6 @@ export class AppointmentsRepository {
   }
 
   public async findAll(): Promise<Appointments[]> {
-    return this.prismaService.appointments.findMany();
+    return this.prismaService.appointment.findMany();
   }
 }
