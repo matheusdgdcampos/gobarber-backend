@@ -2,7 +2,7 @@
   "compilerOptions": {
     "paths": {
       "@config/*": [
-        "./src/cconfig/*"
+        "./src/config/*"
       ],
       "@modules/*": [
         "./src/modules/*"
