@@ -5,6 +5,8 @@ import { validate } from './config/environments-config';
 import { CommonModule } from '@common/modules/common.modules';
 import { UsersModule } from './modules/users/users.module';
 import { PrismaService } from '@common/services/prisma.service';
+import { JwtModule } from '@nestjs/jwt';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -12,9 +14,13 @@ import { PrismaService } from '@common/services/prisma.service';
       isGlobal: true,
       validate,
     }),
+    JwtModule.register({
+      global: true,
+    }),
     CommonModule,
     AppointmentsModule,
     UsersModule,
+    AuthModule,
   ],
   providers: [PrismaService],
 })
