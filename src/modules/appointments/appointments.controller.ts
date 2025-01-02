@@ -1,7 +1,9 @@
 import { Controller, Get, Post, Body } from '@nestjs/common';
 import { AppointmentsService } from './appointments.service';
 import { AppointmentCreateRequestDto } from './dto/appointment-create-request.dto';
+import { Authenticated } from '@common/decorators/auth.decorator';
 
+@Authenticated()
 @Controller('appointments')
 export class AppointmentsController {
   constructor(private readonly appointmentsService: AppointmentsService) {}

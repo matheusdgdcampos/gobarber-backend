@@ -1,4 +1,21 @@
-import { IsEmail, IsString } from 'class-validator';
+import {
+  IsEmail,
+  IsJSON,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
+
+class Avatar {
+  @IsString()
+  @IsNotEmpty()
+  url: string;
+
+  @IsString()
+  @IsNotEmpty()
+  filename: string;
+}
 
 export class CreateUserDto {
   @IsString()
@@ -9,4 +26,9 @@ export class CreateUserDto {
 
   @IsString()
   password: string;
+
+  @IsJSON()
+  @IsOptional()
+  @ValidateNested()
+  avatar?: Avatar;
 }

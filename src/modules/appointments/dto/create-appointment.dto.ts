@@ -1,8 +1,9 @@
-import { IsDateString, IsString } from 'class-validator';
+import { User } from '@modules/users/entities/user.entity';
+import { IsDateString, IsObject } from 'class-validator';
 
 export class CreateAppointmentDto {
-  @IsString()
-  providerId: string;
+  @IsObject()
+  providerId: User;
 
   @IsDateString()
   date: Date;

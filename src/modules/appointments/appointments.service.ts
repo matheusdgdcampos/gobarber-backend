@@ -6,18 +6,22 @@ import {
 } from '@nestjs/common';
 import { parseISO, startOfHour } from 'date-fns';
 import { AppointmentsRepository } from './appointment.repository';
-import { Appointments } from './entities/appointment.entity';
 import { AppointmentCreateRequestDto } from './dto/appointment-create-request.dto';
+import { UsersService } from '@modules/users/users.service';
+import { AppointmentCreateRespondeDto } from './dto/appointment-create-response.dto';
 
 @Injectable()
 export class AppointmentsService {
   private logger = new Logger(AppointmentsService.name);
 
-  constructor(protected appointmentsRepository: AppointmentsRepository) {}
+  constructor(
+    protected readonly appointmentsRepository: AppointmentsRepository,
+    protected readonly usersService: UsersService,
+  ) {}
 
   public async create(
     createAppointmentDto: AppointmentCreateRequestDto,
-  ): Promise<Appointments> {
+  ): Promise<AppointmentCreateRespondeDto> {
     try {
       const parsedDate = startOfHour(parseISO(createAppointmentDto.date));
       const findApppointmentInSameDate =
@@ -30,11 +34,19 @@ export class AppointmentsService {
         });
       }
 
+      const user = await this.usersService.findById(
+        createAppointmentDto.providerId,
+      );
       const appointment = await this.appointmentsRepository.create({
-        providerId: createAppointmentDto.providerId,
+        providerId: user,
         date: parsedDate,
       });
-      return appointment;
+      const response: AppointmentCreateRespondeDto = {
+        id: appointment.id,
+        date: appointment.date,
+        providerId: appointment.providerId.id,
+      };
+      return response;
     } catch (error) {
       this.logger.error(error);
 
