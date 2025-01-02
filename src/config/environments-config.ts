@@ -39,6 +39,18 @@ export class EnvironmentVariables {
 
   @IsString()
   JWT_EXPIRES_IN: string;
+
+  @IsString()
+  AWS_ACCESS_KEY: string;
+
+  @IsString()
+  AWS_SECRET_KEY: string;
+
+  @IsString()
+  AWS_DEFAULT_REGION: string;
+
+  @IsString()
+  AWS_S3_BUCKET_NAME: string;
 }
 
 export function validate(config: Record<string, unknown>) {
