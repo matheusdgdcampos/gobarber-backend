@@ -13,6 +13,7 @@ async function bootstrap() {
       skipMissingProperties: true,
     }),
   );
+  app.enableCors();
   const configService = app.get(ConfigService<EnvironmentVariables>);
   const port = configService.getOrThrow('PORT', 3333);
   const logger = new Logger('bootstrap');
