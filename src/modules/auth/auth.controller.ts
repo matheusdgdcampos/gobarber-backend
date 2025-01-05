@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Res } from '@nestjs/common';
+import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthenticationRequestDto } from './dto/authentication-request.dto';
 import { Response } from 'express';
@@ -27,5 +27,11 @@ export class AuthController {
       sameSite: 'lax', // Indicate only the app can be access cookies of application not a external applications Ex.: microservices
     });
     return token;
+  }
+
+  @Post('signout')
+  async signout(@Res({ passthrough: true }) res: Response) {
+    res.clearCookie('accessToken');
+    return res.sendStatus(HttpStatus.NO_CONTENT).send('No content');
   }
 }
